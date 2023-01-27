@@ -1,43 +1,47 @@
-import {DialogType, MessageType, PostType} from './state';
-
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE_NEW_MESSAGE_BODY';
 const SEND_MESSAGE = 'SEND_MESSAGE';
 
-type InitialStateType = {
-    dialogs: Array<DialogType>
-    messages: Array<MessageType>
-    newMessageBody:string
+export type DialogType = {
+    id: number
+    name: string
+    avatar: string
 }
 
-let initialState: InitialStateType = {
+export type MessageType = {
+    id: number
+    message: string
+}
+
+export type InitialStateType = typeof initialState
+
+let initialState = {
     dialogs: [
-        {id: 1, name: 'Dima'},
-        {id: 2, name: 'Vova'},
-        {id: 3, name: 'Alex'},
-        {id: 4, name: 'David'},
-        {id: 5, name: 'Genya'},
-        {id: 6, name: 'Artem'},
-    ],
+        {id: 1, name: 'Dima', avatar: 'https://cdn-icons-png.flaticon.com/512/4440/4440953.png'},
+        {id: 2, name: 'Vova', avatar: 'https://cdn-icons-png.flaticon.com/512/4441/4441037.png'},
+        {id: 3, name: 'Alexa', avatar: 'https://cdn-icons-png.flaticon.com/512/5231/5231019.png'}
+    ] as Array<DialogType>,
     messages: [
         {id: 1, message: 'Hi'},
         {id: 2, message: 'How are you?'},
-        {id: 3, message: 'Yo'},
-        {id: 4, message: 'Yo'},
-        {id: 5, message: 'Yo'}
-    ],
+        {id: 3, message: 'Yo'}
+    ] as Array<MessageType>,
     newMessageBody: ''
 }
 
-const dialogsReducer = (state = initialState, action: DialogsActions): InitialStateType => {
+const dialogsReducer = (state: InitialStateType = initialState, action: DialogsActions): InitialStateType => {
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_BODY:
-            state.newMessageBody = action.newText
-            return state
+            return {
+                ...state,
+                newMessageBody: action.newText
+            }
         case SEND_MESSAGE:
             let body = state.newMessageBody
-            state.newMessageBody = ''
-            state.messages.push({id: 6, message: body})
-            return state
+            return {
+                ...state,
+                newMessageBody: '',
+                messages: [...state.messages, {id: 6, message: body}]
+            }
         default:
             return state
     }

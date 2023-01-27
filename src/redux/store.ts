@@ -2,11 +2,11 @@ import profileReducer from './profile-reducer';
 import dialogsReducer from './dialogs-reducer';
 import sidebarReducer from './sidebar-reducer';
 
-export type MessageType = {
+type MessageType = {
     id: number
     message: string
 }
-export type DialogType = {
+type DialogType = {
     id: number
     name: string
 }
@@ -40,60 +40,60 @@ export type RootStateType = {
     dispatch: (action:any) => void
 }
 
-let store: RootStateType = {
-    _state : {
-        profilePage: {
-            newPostText: 'it-kamasutra.com',
-            posts: [
-                {id: 1, message: 'Hi. How are you?', likesCount: 12},
-                {id: 2, message: 'It\'s my first post', likesCount: 10},
-                {id: 3, message: 'It\'s my first post2', likesCount: 10},
-                {id: 4, message: 'It\'s my first post3', likesCount: 10}
-            ],
-
-        },
-        dialogPage: {
-            dialogs: [
-                {id: 1, name: 'Dima'},
-                {id: 2, name: 'Vova'},
-                {id: 3, name: 'Alex'},
-                {id: 4, name: 'David'},
-                {id: 5, name: 'Genya'},
-                {id: 6, name: 'Artem'},
-            ],
-            messages: [
-                {id: 1, message: 'Hi'},
-                {id: 2, message: 'How are you?'},
-                {id: 3, message: 'Yo'},
-                {id: 4, message: 'Yo'},
-                {id: 5, message: 'Yo'}
-            ],
-            newMessageBody: ''
-        },
-        sidebar: {}
-    },
-    _callSubscriber(state:StateType) {
-        console.log('State changed')
-    },
-
-    getState() {
-        return this._state;
-    },
-    subscribe(observer:(state:StateType) => void) {
-        this._callSubscriber = observer
-    },
-
-    dispatch(action:any) { // {type: 'ADD-POST'}
-        this._state.profilePage = profileReducer(this._state.profilePage, action)
-        this._state.dialogPage = dialogsReducer(this._state.dialogPage, action)
-        this._state.sidebar = sidebarReducer(this._state.sidebar, action)
-
-        this._callSubscriber(this._state)
-    }
-}
-export default store
+// let store: RootStateType = {
+//     _state : {
+//         profilePage: {
+//             newPostText: 'it-kamasutra.com',
+//             posts: [
+//                 {id: 1, message: 'Hi. How are you?', likesCount: 12},
+//                 {id: 2, message: 'It\'s my first post', likesCount: 10},
+//                 {id: 3, message: 'It\'s my first post2', likesCount: 10},
+//                 {id: 4, message: 'It\'s my first post3', likesCount: 10}
+//             ],
+//
+//         },
+//         dialogPage: {
+//             dialogs: [
+//                 {id: 1, name: 'Dima'},
+//                 {id: 2, name: 'Vova'},
+//                 {id: 3, name: 'Alex'},
+//                 {id: 4, name: 'David'},
+//                 {id: 5, name: 'Genya'},
+//                 {id: 6, name: 'Artem'},
+//             ],
+//             messages: [
+//                 {id: 1, message: 'Hi'},
+//                 {id: 2, message: 'How are you?'},
+//                 {id: 3, message: 'Yo'},
+//                 {id: 4, message: 'Yo'},
+//                 {id: 5, message: 'Yo'}
+//             ],
+//             newMessageBody: ''
+//         },
+//         sidebar: {}
+//     },
+//     _callSubscriber(state:StateType) {
+//         console.log('State changed')
+//     },
+//
+//     getState() {
+//         return this._state;
+//     },
+//     subscribe(observer:(state:StateType) => void) {
+//         this._callSubscriber = observer
+//     },
+//
+//     dispatch(action:any) { // {type: 'ADD-POST'}
+//         this._state.profilePage = profileReducer(this._state.profilePage, action)
+//         this._state.dialogPage = dialogsReducer(this._state.dialogPage, action)
+//         this._state.sidebar = sidebarReducer(this._state.sidebar, action)
+//
+//         this._callSubscriber(this._state)
+//     }
+// }
+// export default store
 //@ts-ignore
-window.store = store
+// window.store = store
 
 // let rerenderEntireTree = () => {
 //     console.log('State changed')

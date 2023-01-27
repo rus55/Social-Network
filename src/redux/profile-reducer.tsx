@@ -1,14 +1,14 @@
-import {PostType} from './state';
+import {PostType} from './store';
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 
-type InitialStateType = {
+export type InitialStateType = {
     newPostText: string
     posts: PostType[]
 }
 
-let initialState:InitialStateType = {
+let initialState: InitialStateType = {
     newPostText: 'it-kamasutra.com',
     posts: [
         {id: 1, message: 'Hi. How are you?', likesCount: 12},
@@ -21,19 +21,25 @@ let initialState:InitialStateType = {
 // почему state через равно?
 const profileReducer = (state = initialState, action: ProfileActions): InitialStateType => {
     switch (action.type) {
-        case ADD_POST:
+        case ADD_POST: {
             let newPost: PostType = {
                 // у него id: 5
                 id: state.posts.length + 1,
                 message: state.newPostText,
                 likesCount: 0
             }
-            state.posts.push(newPost)
-            state.newPostText = ''
-            return state
-        case UPDATE_NEW_POST_TEXT:
-            state.newPostText = action.newText
-            return state
+            return {
+                ...state,
+                newPostText: '',
+                posts: [...state.posts, newPost]
+            }
+        }
+        case UPDATE_NEW_POST_TEXT: {
+            return {
+                ...state,
+                newPostText: action.newText
+            }
+        }
         default:
             return state
     }
@@ -47,7 +53,7 @@ type ProfileActions =
 type addPostActionCreatorType = ReturnType<typeof addPostActionCreator>
 type updateNewPostTextActionCreatorType = ReturnType<typeof updateNewPostTextActionCreator>
 
-export const addPostActionCreator = () => ({type: ADD_POST} as const )
+export const addPostActionCreator = () => ({type: ADD_POST} as const)
 export const updateNewPostTextActionCreator = (newText: string) => ({type: UPDATE_NEW_POST_TEXT, newText} as const)
 
 export default profileReducer
