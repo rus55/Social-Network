@@ -2,10 +2,12 @@ import {PostType} from './store';
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+const SET_USER_PROFILE = 'SET_USER_PROFILE';
 
 export type InitialStateType = {
     newPostText: string
     posts: PostType[]
+    profile: null
 }
 
 let initialState: InitialStateType = {
@@ -16,6 +18,7 @@ let initialState: InitialStateType = {
         {id: 3, message: 'It\'s my first post2', likesCount: 10},
         {id: 4, message: 'It\'s my first post3', likesCount: 10}
     ],
+    profile: null
 }
 // перед стрелкой редьюсер возвращает такой же тип, который у него был
 // почему state через равно?
@@ -40,6 +43,12 @@ const profileReducer = (state = initialState, action: ProfileActions): InitialSt
                 newPostText: action.newText
             }
         }
+        case SET_USER_PROFILE: {
+            return {
+                ...state,
+                profile: action.profile
+            }
+        }
         default:
             return state
     }
@@ -47,13 +56,16 @@ const profileReducer = (state = initialState, action: ProfileActions): InitialSt
 
 type ProfileActions =
     | addPostActionCreatorType
+    | setUserProfileActionCreatorType
     | updateNewPostTextActionCreatorType
 
 // по факту он возвращает объект, у которого есть type и newText, снизу которые
 type addPostActionCreatorType = ReturnType<typeof addPostActionCreator>
+type setUserProfileActionCreatorType = ReturnType<typeof setUserProfileActionCreator>
 type updateNewPostTextActionCreatorType = ReturnType<typeof updateNewPostTextActionCreator>
 
 export const addPostActionCreator = () => ({type: ADD_POST} as const)
+export const setUserProfileActionCreator = (profile: any) => ({type: SET_USER_PROFILE, profile} as const)
 export const updateNewPostTextActionCreator = (newText: string) => ({type: UPDATE_NEW_POST_TEXT, newText} as const)
 
 export default profileReducer
