@@ -1,13 +1,34 @@
 import {PostType} from './store';
+import {usersAPI} from "../api/api";
+import {Dispatch} from "redux";
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 
+type Profiletype = {
+    userId: number
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    contacts: object
+    github: string
+    vk: string
+    facebook: string
+    instagram: string
+    twitter: string
+    website: string
+    youtube: string
+    mainLink: string
+    photos: object
+    small: string
+    large: string
+}
+
 export type InitialStateType = {
     newPostText: string
     posts: PostType[]
-    profile: null
+    profile: null | Profiletype
 }
 
 let initialState: InitialStateType = {
@@ -65,7 +86,12 @@ type setUserProfileActionCreatorType = ReturnType<typeof setUserProfileActionCre
 type updateNewPostTextActionCreatorType = ReturnType<typeof updateNewPostTextActionCreator>
 
 export const addPostActionCreator = () => ({type: ADD_POST} as const)
-export const setUserProfileActionCreator = (profile: any) => ({type: SET_USER_PROFILE, profile} as const)
+export const setUserProfileActionCreator = (profile: Profiletype) => ({type: SET_USER_PROFILE, profile} as const)
+export const getUserProfile = (userId: number) => (dispatch: Dispatch) => {
+    usersAPI.getProfile(userId).then(response => {
+        dispatch(setUserProfileActionCreator(response.data))
+    })
+}
 export const updateNewPostTextActionCreator = (newText: string) => ({type: UPDATE_NEW_POST_TEXT, newText} as const)
 
 export default profileReducer

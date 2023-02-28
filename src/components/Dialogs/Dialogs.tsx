@@ -2,27 +2,9 @@ import React, { ChangeEvent } from 'react';
 import s from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
-import { DialogPageType } from '../../redux/store';
 import {DialogsPropsType} from './DialogsContainer';
-
-// type Dialog = {
-//     id: number
-//     name: string
-// }
-// type Message = {
-//     id: number
-//     message: string
-// }
-
-// type DialogsProps = {
-//     sendMessage: () => void
-//     updateNewMessageBodyCreator: (body: string) => void
-//     dialogPage: DialogPageType
-// }
-
+import {Redirect} from "react-router-dom";
 const Dialogs = (props: DialogsPropsType) => {
-    // const {dialogs,messages,newMessageBody} = props.dialogPage
-
     let state = props.dialogPage
 
     let dialogsElements = state.dialogs.map(d => <DialogItem name={d.name} key={d.id} id={d.id}/>)
@@ -36,6 +18,7 @@ const Dialogs = (props: DialogsPropsType) => {
         let body = e.currentTarget.value
         props.updateNewMessageBodyCreator(body)
     }
+    if (!props.isAuth) return <Redirect to='/login'/>
     return (
         <div className={s.dialogs}>
             <div className={s.dialogItems}>
