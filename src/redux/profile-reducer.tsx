@@ -6,12 +6,7 @@ const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 
-type Profiletype = {
-    userId: number
-    lookingForAJob: boolean
-    lookingForAJobDescription: string
-    fullName: string
-    contacts: object
+type contactsType = {
     github: string
     vk: string
     facebook: string
@@ -20,9 +15,18 @@ type Profiletype = {
     website: string
     youtube: string
     mainLink: string
-    photos: object
+}
+type PhotosType = {
     small: string
     large: string
+}
+type Profiletype = {
+    userId: number
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    contacts: contactsType
+    photos: PhotosType
 }
 
 export type InitialStateType = {

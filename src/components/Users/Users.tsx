@@ -41,12 +41,14 @@ const Users: React.FC<UsersType> = (props) => {
                                 </NavLink>
                         </div>
                         <div>
+                            // props.unfollow(true, u.id)
+                            // props.follow(true, u.id)
                             {u.followed
                                 ? <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
-                                    props.unfollow(true, u.id)
+                                    props.unfollow(u.id)
                                 }}>Unfollow</button>
                                 : <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
-                                    props.follow(true, u.id)
+                                    props.follow(u.id)
                                 }}>Follow</button>
                             }
                         </div>
