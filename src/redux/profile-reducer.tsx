@@ -1,10 +1,10 @@
 import {PostType} from './store';
-import {usersAPI} from "../api/api";
+import {profileAPI, usersAPI} from "../api/api";
 import {Dispatch} from "redux";
 
 const ADD_POST = 'ADD-POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
+const SET_STATUS = 'SET_STATUS';
 
 type contactsType = {
     github: string
@@ -36,7 +36,6 @@ export type InitialStateType = {
 }
 
 let initialState: InitialStateType = {
-    newPostText: 'it-kamasutra.com',
     posts: [
         {id: 1, message: 'Hi. How are you?', likesCount: 12},
         {id: 2, message: 'It\'s my first post', likesCount: 10},
@@ -45,15 +44,13 @@ let initialState: InitialStateType = {
     ],
     profile: null
 }
-// перед стрелкой редьюсер возвращает такой же тип, который у него был
-// почему state через равно?
+
 const profileReducer = (state = initialState, action: ProfileActions): InitialStateType => {
     switch (action.type) {
         case ADD_POST: {
             let newPost: PostType = {
-                // у него id: 5
                 id: state.posts.length + 1,
-                message: state.newPostText,
+                message: action.newPostText,
                 likesCount: 0
             }
             return {
@@ -62,10 +59,10 @@ const profileReducer = (state = initialState, action: ProfileActions): InitialSt
                 posts: [...state.posts, newPost]
             }
         }
-        case UPDATE_NEW_POST_TEXT: {
+        case SET_STATUS: {
             return {
                 ...state,
-                newPostText: action.newText
+                status: action.status
             }
         }
         case SET_USER_PROFILE: {
@@ -84,18 +81,32 @@ type ProfileActions =
     | setUserProfileActionCreatorType
     | updateNewPostTextActionCreatorType
 
-// по факту он возвращает объект, у которого есть type и newText, снизу которые
 type addPostActionCreatorType = ReturnType<typeof addPostActionCreator>
 type setUserProfileActionCreatorType = ReturnType<typeof setUserProfileActionCreator>
 type updateNewPostTextActionCreatorType = ReturnType<typeof updateNewPostTextActionCreator>
 
-export const addPostActionCreator = () => ({type: ADD_POST} as const)
+export const addPostActionCreator = (newPostText) => ({type: ADD_POST, newPostText} as const)
 export const setUserProfileActionCreator = (profile: Profiletype) => ({type: SET_USER_PROFILE, profile} as const)
+export const setStatus = (status: ) => ({type: SET_STATUS, status} as const)
+
 export const getUserProfile = (userId: number) => (dispatch: Dispatch) => {
     usersAPI.getProfile(userId).then(response => {
         dispatch(setUserProfileActionCreator(response.data))
     })
 }
-export const updateNewPostTextActionCreator = (newText: string) => ({type: UPDATE_NEW_POST_TEXT, newText} as const)
+
+export const getStatus = (userId: number) => (dispatch: Dispatch) => {
+    profileAPI.getStatus(userId).then(response => {
+        dispatch(setStatus(response.data))
+    })
+}
+
+export const updateStatus = (status: ) => (dispatch: Dispatch) => {
+    profileAPI.updateStatus(status).then(response => {
+        if (response.data.resultCode === 0) {
+            dispatch(setStatus(status))
+        }
+    })
+}
 
 export default profileReducer

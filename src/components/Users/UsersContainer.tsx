@@ -12,6 +12,7 @@ import {
 import {AppStateType} from '../../redux/redux-store';
 import Preloader from '../common/Preloader/Preloader';
 import {AnyAction, compose} from "redux";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 type MapStateToPropsType = {
     currentPage: number
@@ -93,7 +94,11 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }*/
 // export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer)
-export default compose<React.FC>(connect(mapStateToProps, {
-    follow, unfollow, setCurrentPage, toggleFollowingProgress,
-    getUsers
-}))(UsersContainer)
+
+export default compose(
+    withAuthRedirect,
+    connect(mapStateToProps, {
+        follow, unfollow, setCurrentPage, toggleFollowingProgress,
+        getUsers
+    })
+)(UsersContainer)
