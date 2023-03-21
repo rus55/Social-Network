@@ -3,7 +3,7 @@ import Profile from './Profile'
 import {withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import {AppStateType} from "../../redux/redux-store";
-import {getUserProfile} from "../../redux/profile-reducer";
+import {getStatus, getUserProfile, Profiletype, updateStatus} from "../../redux/profile-reducer";
 import {compose, Dispatch} from "redux";
 interface ProfileContainerType {
     match: {
@@ -12,8 +12,12 @@ interface ProfileContainerType {
         }
     },
     profile: any,
+    status: any,
+    updateStatus: (status: any) => void
     getUserProfile: (userId: number) => (dispatch: Dispatch) => void,
+    getStatus: (userId: number) => void
     isAuth: boolean
+    authorizedUserId: number
 }
 class ProfileContainer extends React.Component<ProfileContainerType> {
     componentDidMount() {
@@ -29,10 +33,17 @@ class ProfileContainer extends React.Component<ProfileContainerType> {
     }
 }
 
-let mapStateToProps = (state: AppStateType) => ({
-    profile: state.profilePage,
+type MSTP = {
+    profile: Profiletype | null
+    status: any
+    authorizedUserId: number | null
+    isAuth: boolean
+}
+
+let mapStateToProps = (state: AppStateType): MSTP => ({
+    profile: state.profilePage.profile,
     status: state.profilePage.status,
-    authorizedUserId: state.auth.userId,
+    authorizedUserId: state.auth.id,
     isAuth: state.auth.isAuth
 })
 

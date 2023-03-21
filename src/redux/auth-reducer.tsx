@@ -1,6 +1,8 @@
 import {authAPI} from "../api/api";
 import {Dispatch} from "redux";
 import {stopSubmit} from "redux-form";
+import {AppThunk} from "./redux-store";
+import {FormAction} from "redux-form/lib/actions";
 
 const SET_USER_DATA = 'SET_USER_DATA';
 
@@ -17,7 +19,7 @@ export type InitialStateType = {
     login: string | null
     isAuth: boolean
 }
-const authReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
+const authReducer = (state: InitialStateType = initialState, action: AuthActionsType): InitialStateType => {
     switch (action.type) {
         case SET_USER_DATA:
             return {
@@ -28,11 +30,16 @@ const authReducer = (state: InitialStateType = initialState, action: ActionsType
             return state
     }
 }
-export type setAuthUserDataActionType = {type: 'SET_USER_DATA', data: any}
+export type setAuthUserDataActionType = {type: 'SET_USER_DATA', payload: {
+        userId: number,
+        email: string,
+        login: string,
+        isAuth: boolean
+    }}
 
-type ActionsType = setAuthUserDataActionType
+export type AuthActionsType = setAuthUserDataActionType | FormAction
 
-export const setAuthUserData = (userId: number, email: string, login: string, isAuth: boolean) => ({type: SET_USER_DATA, payload: {userId, email, login, isAuth} } as const)
+export const setAuthUserData = (userId: number | null, email: string | null, login: string | null, isAuth: boolean) => ({type: SET_USER_DATA, payload: {userId, email, login, isAuth} } as const)
 
 export const getAuthUserData = () => (dispatch: Dispatch) => {
     authAPI.me()
@@ -44,8 +51,7 @@ export const getAuthUserData = () => (dispatch: Dispatch) => {
         })
 }
 
-export const login = (email, password, rememberMe) => (dispatch: Dispatch) => {
-
+export const login = (email: string, password: string, rememberMe: boolean): AppThunk  => (dispatch) => {
     authAPI.login(email, password, rememberMe)
         .then(response => {
             if (response.data.resultCode === 0) {
@@ -61,7 +67,7 @@ export const logout = () => (dispatch: Dispatch) => {
     authAPI.logout()
         .then(response => {
             if (response.data.resultCode === 0) {
-                dispatch(setAuthUserData(null, null, null, false)
+                dispatch(setAuthUserData(null, null, null, false))
             }
         })
 }

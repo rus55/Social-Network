@@ -1,7 +1,9 @@
-import React from 'react';
-import {Field, reduxForm} from 'redux-form';
+import React, {FC} from 'react';
+import {Field, reduxForm, InjectedFormProps} from 'redux-form';
 
-const AddPostForm = (props) => {
+
+const AddPostForm: FC<InjectedFormProps> = (props) => {
+
     return (
         <form onSubmit={props.handleSubmit}>
             <div>

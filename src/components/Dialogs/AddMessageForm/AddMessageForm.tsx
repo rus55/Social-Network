@@ -5,7 +5,7 @@ import {maxLengthCreator, required} from "../../../utils/validators/validators";
 
 const maxLength50 = maxLengthCreator(50)
 
-const AddMessageForm = (props) => {
+const AddMessageForm = (props: any) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
@@ -23,4 +23,4 @@ const AddMessageForm = (props) => {
     )
 }
 
-export default reduxForm({form: 'dialog-add-message-form'})(AddMessageForm)
+export default reduxForm<{newMessageBody: string}>({form: 'dialog-add-message-form'})(AddMessageForm)

@@ -1,17 +1,20 @@
-import React from 'react'
+import React, {FC} from 'react'
 import s from './MyPosts.module.css'
 import Post from './Post/Post'
 import { MyPostsPropsType } from './MyPostsContainer';
-import {reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {maxLengthCreator, required} from "../../../utils/validators/validators";
+import { Textarea } from '../../common/FormsControls/FormsControls';
 
 const maxLength10 = maxLengthCreator(10)
 
-let AddNewPostForm = {props} => {
+let AddNewPostForm: FC<InjectedFormProps<{newPostText: string}>> = (props) => {
+
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
                 <Field
+                    type={'text'}
                     name='newPostText'
                     component={Textarea}
                     placeholder={'Post message'}
@@ -25,20 +28,19 @@ let AddNewPostForm = {props} => {
     )
 }
 
-let AddNewPostFormRedux = reduxForm({form: "ProfileAddNewPostForm"})(AddNewPostForm)
+let AddNewPostFormRedux = reduxForm<{newPostText: string}>({form: "ProfileAddNewPostForm"})(AddNewPostForm)
 
 const MyPosts = (props: MyPostsPropsType) => {
     let postsElements = props.posts.map(p => <Post message={p.message} key={p.id} likesCount={p.likesCount}/>)
-    let newPostElement = React.createRef<HTMLTextAreaElement>()
 
-    const onAddPost = (values) => {
+    const onAddPost = (values: {newPostText: string}) => {
         props.addPost(values.newPostText)
     }
 
     return (
         <div className={s.postsBlock}>
             <h3>My posts</h3>
-            <AddNewPostForm onSubmit={onAddPost}/>
+            <AddNewPostFormRedux onSubmit={onAddPost}/>
             <div className={s.posts}>
                 {postsElements}
             </div>

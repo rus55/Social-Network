@@ -3,7 +3,10 @@ import s from './Header.module.css'
 import {NavLink} from 'react-router-dom'
 import {HeaderContainerTypeProps} from "./HeaderContainer";
 
-type HeaderPropsType = HeaderContainerTypeProps
+type LogoutType = {
+    logout: () => void
+}
+type HeaderPropsType = HeaderContainerTypeProps & LogoutType
 const Header = (props: HeaderPropsType) => {
     return (
         <header className={s.header}>

@@ -45,7 +45,7 @@ export type InitialStateType = {
     followingInProgress: Array<number>
 
 }
-const usersReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
+const usersReducer = (state: InitialStateType = initialState, action: UsersActionsType): InitialStateType => {
     switch (action.type) {
         case FOLLOW:
             return {
@@ -111,7 +111,7 @@ export type setTotalUsersCountActionType = { type: 'SET_TOTAL_USERS_COUNT', tota
 export type toggleIsFetchingActionType = { type: 'TOGGLE_IS_FETCHING', isFetching: boolean }
 export type toggleFollowingProgressActionType = { type: 'TOGGLE_IS_FOLLOWING_PROGRESS', isFetching: boolean, userId: number }
 
-type ActionsType = followActionType | unfollowActionType
+export type UsersActionsType = followActionType | unfollowActionType
     | setUsersActionType | setCurrentPageActionType
     | setTotalUsersCountActionType | toggleIsFetchingActionType
     | toggleFollowingProgressActionType

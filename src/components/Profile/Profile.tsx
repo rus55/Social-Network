@@ -5,12 +5,14 @@ import {ProfilePageType} from "../../redux/store";
 
 type ProfileType = {
     profile: ProfilePageType
+    status: any
+    updateStatus: (status: any) => void
 }
 
 const Profile = (props: ProfileType) => {
     return (
         <div>
-            <ProfileInfo profile={props.profile} status={props.status updateStatus={props.updateStatus}/>
+            <ProfileInfo profile={props.profile} status={ props.status} updateStatus={props.updateStatus}  />
             <MyPostsContainer />
         </div>
     )

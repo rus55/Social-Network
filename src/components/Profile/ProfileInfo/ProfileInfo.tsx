@@ -6,6 +6,8 @@ import ProfileStatus from './ProfileStatus'
 
 type ProfileInfoType = {
     profile: ProfilePageType
+    status: any,
+    updateStatus: (status: any) => void
 }
 const ProfileInfo = (props: ProfileInfoType) => {
     if (!props.profile) {

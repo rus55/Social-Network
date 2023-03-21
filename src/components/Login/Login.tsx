@@ -6,11 +6,17 @@ import {login} from "../../redux/auth-reducer";
 import {required} from "../../utils/validators/validators";
 import {Redirect} from "react-router-dom";
 import style from './../common/FormsControls/FormsControls.module.css'
+import {AppStateType} from "../../redux/redux-store";
 
 type FormDataType = {
     email: string
     password: string
     rememberMe: boolean
+}
+
+type LoginType = {
+    login: (email: string, password: string, rememberMe: boolean) => void
+    isAuth: boolean
 }
 
 const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
@@ -50,7 +56,7 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 
 const LoginReduxForm = reduxForm<FormDataType>({form: 'login'})(LoginForm)
 
-const Login = (props) => {
+const Login = (props: LoginType) => {
     const onSubmit = (formData: FormDataType) => {
         props.login(formData.email, formData.password, formData.rememberMe)
     }
@@ -65,7 +71,7 @@ const Login = (props) => {
     </div>
 };
 
-const mapStatetoProps = (state) => ({
+const mapStatetoProps = (state: AppStateType) => ({
     isAuth: state.auth.isAuth
 })
 

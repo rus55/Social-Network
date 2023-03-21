@@ -19,6 +19,7 @@ type MSTP = {
 }
 type MDTP = {
     getAuthUserData: () => void
+    logout: () => void
 }
 const mapStateToProps = (state: AppStateType): MSTP => ({
     isAuth: state.auth.isAuth,

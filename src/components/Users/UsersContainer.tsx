@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ComponentType} from 'react'
 import Users from './Users';
 import {connect} from 'react-redux'
 import {
@@ -95,7 +95,7 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 }*/
 // export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer)
 
-export default compose(
+export default compose<ComponentType>(
     withAuthRedirect,
     connect(mapStateToProps, {
         follow, unfollow, setCurrentPage, toggleFollowingProgress,

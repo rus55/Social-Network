@@ -38,11 +38,11 @@ const dialogsReducer = (state: InitialStateType = initialState, action: DialogsA
             return state
     }
 }
-type DialogsActions =
+export type DialogsActions =
     | sendMessageCreatorType
 
 type sendMessageCreatorType = ReturnType<typeof sendMessageCreator>
 
-export const sendMessageCreator = (newMessageBody) => ({type: SEND_MESSAGE, newMessageBody} as const)
+export const sendMessageCreator = (newMessageBody: string) => ({type: SEND_MESSAGE, newMessageBody} as const)
 
 export default dialogsReducer
