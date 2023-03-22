@@ -62,7 +62,7 @@ const Login = (props: LoginType) => {
     }
 
     if (props.isAuth) {
-        return <Redirect to={'/profile'}/>
+        //return <Redirect to={'/profile'}/>
     }
 
     return <div>

@@ -7,12 +7,18 @@ import {
     setCurrentPage,
     unfollow,
     toggleFollowingProgress,
-    getUsers
+    requestUsers
 } from '../../redux/users-reducer';
 import {AppStateType} from '../../redux/redux-store';
 import Preloader from '../common/Preloader/Preloader';
-import {AnyAction, compose} from "redux";
-import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
+import {
+    getCurrentPage,
+    getFollowingInProgress,
+    getIsFetching,
+    getPageSize,
+    getTotalUsersCount, getUsers
+} from "../../redux/users-selectors";
 
 type MapStateToPropsType = {
     currentPage: number
@@ -57,8 +63,8 @@ class UsersContainer extends React.Component<UsersPropsType> {
         </>
     }
 }
-// для передачи юзеров в пропсы для презентационной компоненты
-let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+
+/*let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
@@ -67,38 +73,22 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         isFetching: state.usersPage.isFetching,
         followingInProgress: state.usersPage.followingInProgress
     }
-}
-// для передачи презентационной компоненте колбеки, которые будет вызывать презентационная компонента
-// предназначение коллбеков общаться со стором
-/*let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
-    return {
-        follow: (userId: number) => {
-            // диспатчим результат работы action creator (action - объект, который содержит как минимум тип)
-            dispatch(followAC(userId))
-        },
-        unfollow: (userId: number) => {
-            dispatch(unfollowAC(userId))
-        },
-        setUsers: (users: Array<UserType>) => {
-            dispatch(setUsersAC(users))
-        },
-        setCurrentPage: (pageNumber) => {
-            dispatch(setCurrentPageAC(pageNumber))
-        },
-        setTotalUsersCount: (totalCount) => {
-            dispatch(setUsersTotalCountAC(totalCount))
-        },
-        toggleIsFetching: (isFetching) => {
-            dispatch(toggleIsFetchingAC(isFetching))
-        },
-    }
 }*/
-// export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer)
+
+let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+    return {
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        followingInProgress: getFollowingInProgress(state)
+    }
+}
 
 export default compose<ComponentType>(
-    withAuthRedirect,
     connect(mapStateToProps, {
         follow, unfollow, setCurrentPage, toggleFollowingProgress,
-        getUsers
+        getUsers: requestUsers
     })
 )(UsersContainer)

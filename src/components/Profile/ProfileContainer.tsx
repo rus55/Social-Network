@@ -5,12 +5,14 @@ import { connect } from 'react-redux';
 import {AppStateType} from "../../redux/redux-store";
 import {getStatus, getUserProfile, Profiletype, updateStatus} from "../../redux/profile-reducer";
 import {compose, Dispatch} from "redux";
-interface ProfileContainerType {
-    match: {
+import {RouteComponentProps} from "react-router";
+interface ProfileContainerType extends RouteComponentProps<{ userId: string | undefined }> {
+    /*match: {
         params: {
             userId: number
         }
     },
+    history: any,*/
     profile: any,
     status: any,
     updateStatus: (status: any) => void
@@ -19,10 +21,16 @@ interface ProfileContainerType {
     isAuth: boolean
     authorizedUserId: number
 }
+
 class ProfileContainer extends React.Component<ProfileContainerType> {
     componentDidMount() {
-        let userId = this.props.match.params.userId
-        if (!userId) {userId = this.props.authorizedUserId}
+        let userId = this.props.match.params.userId ? +this.props.match.params.userId : undefined
+        if (!userId) {
+            userId = this.props.authorizedUserId
+            if (!userId) {
+               // this.props.history.push('/login')
+            }
+        }
         this.props.getUserProfile(userId)
         this.props.getStatus(userId)
     }
@@ -48,6 +56,6 @@ let mapStateToProps = (state: AppStateType): MSTP => ({
 })
 
 export default compose<ComponentType>(
+    withRouter,
     connect(mapStateToProps, {getUserProfile, getStatus, updateStatus}),
-    withRouter
 )(ProfileContainer)
