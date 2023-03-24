@@ -24,7 +24,7 @@ interface ProfileContainerType extends RouteComponentProps<{ userId: string | un
 
 class ProfileContainer extends React.Component<ProfileContainerType> {
     componentDidMount() {
-        let userId = this.props.match.params.userId ? +this.props.match.params.userId : undefined
+        let userId = this.props.match.params.userId ? +this.props.match.params.userId : 27595
         if (!userId) {
             userId = this.props.authorizedUserId
             if (!userId) {

@@ -16,10 +16,10 @@ const ProfileInfo = (props: ProfileInfoType) => {
     }
     return (
         <div>
-            {/*<div>
+            <div>
                 <img src="https://wiotto.com/backend/webcontent/kcfinder/images/images/Maldives_Beach_1.jpg"
                      alt=""/>
-            </div>*/}
+            </div>
             <div className={s.descriptionBlock}>
               {/*  <img src={props.profile.photos.large}/>*/}
                 ava + descr
