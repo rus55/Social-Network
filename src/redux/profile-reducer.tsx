@@ -5,6 +5,7 @@ import {Dispatch} from "redux";
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
+const DELETE_POST = 'DELETE-POST';
 
 type contactsType = {
     github: string
@@ -74,6 +75,12 @@ const profileReducer = (state = initialState, action: ProfileActions): InitialSt
                 profile: action.profile
             }
         }
+        case DELETE_POST: {
+            return {
+                ...state,
+                posts: state.posts.filter(p => p.id !== action.postId)
+            }
+        }
         default:
             return state
     }
@@ -83,33 +90,33 @@ export type ProfileActions =
     | addPostActionCreatorType
     | setUserProfileActionCreatorType
     | setStatusActionCreatorType
+    | deletePostActionCreatorType
 
 type addPostActionCreatorType = ReturnType<typeof addPostActionCreator>
 type setUserProfileActionCreatorType = ReturnType<typeof setUserProfileActionCreator>
 type setStatusActionCreatorType = ReturnType<typeof setStatus>
+type deletePostActionCreatorType = ReturnType<typeof deletePost>
 
 export const addPostActionCreator = (newPostText: string) => ({type: ADD_POST, newPostText} as const)
 export const setUserProfileActionCreator = (profile: Profiletype) => ({type: SET_USER_PROFILE, profile} as const)
 export const setStatus = (status: any) => ({type: SET_STATUS, status} as const)
+export const deletePost = (postId: number) => ({type: DELETE_POST, postId})
 
-export const getUserProfile = (userId: number) => (dispatch: Dispatch) => {
-    usersAPI.getProfile(userId).then(response => {
-        dispatch(setUserProfileActionCreator(response.data))
-    })
+export const getUserProfile = (userId: number) => async (dispatch: Dispatch) => {
+    let response = await usersAPI.getProfile(userId)
+    dispatch(setUserProfileActionCreator(response.data))
 }
 
-export const getStatus = (userId: number) => (dispatch: Dispatch) => {
-    profileAPI.getStatus(userId).then(response => {
-        dispatch(setStatus(response.data))
-    })
+export const getStatus = (userId: number) => async (dispatch: Dispatch) => {
+    let response = await profileAPI.getStatus(userId)
+    dispatch(setStatus(response.data))
 }
 
-export const updateStatus = (status: any) => (dispatch: Dispatch) => {
-    profileAPI.updateStatus(status).then(response => {
-        if (response.data.resultCode === 0) {
-            dispatch(setStatus(status))
-        }
-    })
+export const updateStatus = (status: any) => async (dispatch: Dispatch) => {
+    let response = await profileAPI.updateStatus(status)
+    if (response.data.resultCode === 0) {
+        dispatch(setStatus(status))
+    }
 }
 
 export default profileReducer

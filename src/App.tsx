@@ -18,7 +18,6 @@ type AppPropsType = {
     initialized: boolean
 }
 
-
 class App extends Component<AppPropsType> {
     componentDidMount() {
         this.props.initializeApp()

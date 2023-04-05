@@ -38,6 +38,7 @@ const dialogsReducer = (state: InitialStateType = initialState, action: DialogsA
             return state
     }
 }
+
 export type DialogsActions =
     | sendMessageCreatorType
 

@@ -8,8 +8,8 @@ import { Textarea } from '../../common/FormsControls/FormsControls';
 
 const maxLength10 = maxLengthCreator(10)
 
-let AddNewPostForm: FC<InjectedFormProps<{newPostText: string}>> = (props) => {
-
+let AddNewPostForm: FC<InjectedFormProps<{newPostText: string}>> = React.memo((props) => {
+    console.log('Render')
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
@@ -26,7 +26,7 @@ let AddNewPostForm: FC<InjectedFormProps<{newPostText: string}>> = (props) => {
             </div>
         </form>
     )
-}
+})
 
 let AddNewPostFormRedux = reduxForm<{newPostText: string}>({form: "ProfileAddNewPostForm"})(AddNewPostForm)
 

@@ -1,10 +1,9 @@
 import React from 'react';
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import { Input } from '../common/FormsControls/FormsControls';
+import {createField, Input} from '../common/FormsControls/FormsControls';
 import {connect} from "react-redux";
 import {login} from "../../redux/auth-reducer";
 import {required} from "../../utils/validators/validators";
-import {Redirect} from "react-router-dom";
 import style from './../common/FormsControls/FormsControls.module.css'
 import {AppStateType} from "../../redux/redux-store";
 
@@ -19,32 +18,14 @@ type LoginType = {
     isAuth: boolean
 }
 
-const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, error}) => {
     return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field
-                    placeholder={'Email'}
-                    name={'email'}
-                    validate={[required]}
-                    component={Input}/>
-            </div>
-            <div>
-                <Field
-                    placeholder={'Password'}
-                    name={'password'}
-                    type={'password'}
-                    validate={[required]}
-                    component={Input}/>
-            </div>
-            <div>
-                <Field
-                    component={Input}
-                    name={'rememberMe'}
-                    type={'checkbox'}/> remember me
-            </div>
-            {props.error && <div className={style.formSummaryError}>
-                {props.error}
+        <form onSubmit={handleSubmit}>
+            {createField('Email', 'email', [required], Input)}
+            {createField('Password', 'password', [required], Input, {type:'password'} )}
+            {createField(null, 'rememberMe', [required], Input, {type: 'checkbox'}, 'remember me' )}
+            {error && <div className={style.formSummaryError}>
+                {error}
             </div>}
 
             <div>
@@ -67,7 +48,7 @@ const Login = (props: LoginType) => {
 
     return <div>
         <h1>Login</h1>
-        <LoginReduxForm onSubmit={onSubmit} />
+        <LoginReduxForm onSubmit={onSubmit}/>
     </div>
 };
 
