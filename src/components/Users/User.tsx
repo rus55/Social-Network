@@ -3,14 +3,9 @@ import React from 'react';
 import {NavLink} from "react-router-dom";
 import {UserType} from "../../redux/users-reducer";
 import userPhoto from '../../assests/images/user.png'
-import Paginator from '../common/Paginator/Paginator';
 
 type UsersType = {
-    currentPage: number
-    onPageChanged: (value: number) => void
-    totalUsersCount: number
-    pageSize: number
-    users: Array<UserType>
+    user: UserType
     unfollow: (userId: number) => void
     follow: (userId: number) => void
     followingInProgress: Array<number>

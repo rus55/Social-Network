@@ -34,7 +34,7 @@ export type InitialStateType = {
     newPostText: string
     posts: PostType[]
     profile: null | Profiletype
-    status: any
+    status: null | string
 }
 
 let initialState: InitialStateType = {
@@ -99,8 +99,8 @@ type deletePostActionCreatorType = ReturnType<typeof deletePost>
 
 export const addPostActionCreator = (newPostText: string) => ({type: ADD_POST, newPostText} as const)
 export const setUserProfileActionCreator = (profile: Profiletype) => ({type: SET_USER_PROFILE, profile} as const)
-export const setStatus = (status: any) => ({type: SET_STATUS, status} as const)
-export const deletePost = (postId: number) => ({type: DELETE_POST, postId})
+export const setStatus = (status: string) => ({type: SET_STATUS, status} as const)
+export const deletePost = (postId: number) => ({type: DELETE_POST, postId} as const)
 
 export const getUserProfile = (userId: number) => async (dispatch: Dispatch) => {
     let response = await usersAPI.getProfile(userId)

@@ -1,7 +1,12 @@
 import {UserType} from "../../src/redux/users-reducer";
+import { UserDataType } from "../components/Users/Users";
+
+type UserIdType = {
+    id: string
+}
 
 type updateObjectInArrayTypeProps = {
-    items: Array<UserType>
+    items: UserType[]
     itemId: number
     objectPropName: string
     newObjProps: {followed: boolean}
@@ -9,9 +14,10 @@ type updateObjectInArrayTypeProps = {
 
 export const updateObjectInArray = ({items, itemId, objectPropName, newObjProps}: updateObjectInArrayTypeProps) => {
     return items.map(u => {
-        if (u[objectPropName] === itemId) {
+        if (u[objectPropName as keyof UserIdType ] === itemId) {
             return {...u, ...newObjProps}
         }
         return u
     })
 }
+

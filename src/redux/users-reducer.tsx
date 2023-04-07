@@ -1,6 +1,7 @@
 import {usersAPI} from "../api/api";
 import {Dispatch} from "redux";
-import {updateObjectInArray} from "src/utils/object-helpers";
+import { updateObjectInArray } from "../utils/object-helpers";
+
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -51,12 +52,12 @@ const usersReducer = (state: InitialStateType = initialState, action: UsersActio
         case FOLLOW:
             return {
                 ...state,
-                users: updateObjectInArray(state.users, action.userId, 'id', {followed: true})
+                users: updateObjectInArray({items: state.users, itemId: action.userId, objectPropName: 'id', newObjProps: {followed: true}})
             };
         case UNFOLLOW:
             return {
                 ...state,
-                users: updateObjectInArray(state.users, action.userId, 'id', {followed: false})
+                users: updateObjectInArray({items: state.users, itemId: action.userId, objectPropName: 'id', newObjProps: {followed: false}})
             };
         case SET_USERS: {
             return {
@@ -140,7 +141,7 @@ export const requestUsers = (page: number, pageSize: number) => {
     }
 }
 
-const followUnfollowFlow = async (dispatch: Dispatch, userId: number, apiMethod: (userId: number) => void, actionCreator) => {
+const followUnfollowFlow = async (dispatch: Dispatch, userId: number, apiMethod: (userId: number) => any, actionCreator: (userId: number) => unfollowActionType | followActionType) => {
     dispatch(toggleFollowingProgress(true, userId))
     let response = await apiMethod(userId)
     if (response.data.resultCode === 0) {
