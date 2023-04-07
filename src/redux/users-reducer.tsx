@@ -1,7 +1,6 @@
-import {usersAPI} from "../api/api";
+import {UserResponseType, usersAPI} from "../api/api";
 import {Dispatch} from "redux";
 import { updateObjectInArray } from "../utils/object-helpers";
-
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -152,13 +151,13 @@ const followUnfollowFlow = async (dispatch: Dispatch, userId: number, apiMethod:
 
 export const follow = (userId: number) => {
     return async (dispatch: Dispatch) => {
-        followUnfollowFlow(dispatch, userId, usersAPI.follow.bind(usersAPI), followSuccess)
+        await followUnfollowFlow(dispatch, userId, usersAPI.follow.bind(usersAPI), followSuccess)
     }
 }
 
 export const unfollow = (userId: number) => {
     return async (dispatch: Dispatch) => {
-        followUnfollowFlow(dispatch, userId, usersAPI.unfollow.bind(usersAPI), unfollowSuccess)
+        await followUnfollowFlow(dispatch, userId, usersAPI.unfollow.bind(usersAPI), unfollowSuccess)
     }
 }
 

@@ -1,5 +1,4 @@
 import {UserType} from "../../src/redux/users-reducer";
-import { UserDataType } from "../components/Users/Users";
 
 type UserIdType = {
     id: string
@@ -20,4 +19,3 @@ export const updateObjectInArray = ({items, itemId, objectPropName, newObjProps}
         return u
     })
 }
-
