@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 
 let rerenderEntireTree = (state: AppStateType) => {
     ReactDOM.render(
-        <BrowserRouter>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
             <Provider store={store}>
                 <App />
             </Provider>
