@@ -1,11 +1,13 @@
 import {PostType} from './store';
 import {profileAPI, usersAPI} from "../api/api";
 import {Dispatch} from "redux";
+import profile from "src/components/Profile/Profile";
 
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
 const DELETE_POST = 'DELETE-POST';
+const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS';
 
 type contactsType = {
     github: string
@@ -81,6 +83,12 @@ const profileReducer = (state = initialState, action: ProfileActions): InitialSt
                 posts: state.posts.filter(p => p.id !== action.postId)
             }
         }
+        case SAVE_PHOTO_SUCCESS: {
+            return {
+                ...state,
+                profile: {...state.profile, photos: action.photos}})
+            }
+        }
         default:
             return state
     }
@@ -91,16 +99,19 @@ export type ProfileActions =
     | setUserProfileActionCreatorType
     | setStatusActionCreatorType
     | deletePostActionCreatorType
+    | savePhotoSuccessActionCreatorType
 
 type addPostActionCreatorType = ReturnType<typeof addPostActionCreator>
 type setUserProfileActionCreatorType = ReturnType<typeof setUserProfileActionCreator>
 type setStatusActionCreatorType = ReturnType<typeof setStatus>
 type deletePostActionCreatorType = ReturnType<typeof deletePost>
+type savePhotoSuccessActionCreatorType = ReturnType<typeof savePhotoSuccess>
 
 export const addPostActionCreator = (newPostText: string) => ({type: ADD_POST, newPostText} as const)
 export const setUserProfileActionCreator = (profile: Profiletype) => ({type: SET_USER_PROFILE, profile} as const)
 export const setStatus = (status: string) => ({type: SET_STATUS, status} as const)
 export const deletePost = (postId: number) => ({type: DELETE_POST, postId} as const)
+export const savePhotoSuccess = (photos: number) => ({type: SAVE_PHOTO_SUCCESS, photos} as const)
 
 export const getUserProfile = (userId: number) => async (dispatch: Dispatch) => {
     let response = await usersAPI.getProfile(userId)
@@ -116,6 +127,14 @@ export const updateStatus = (status: string) => async (dispatch: Dispatch) => {
     let response = await profileAPI.updateStatus(status)
     if (response.data.resultCode === 0) {
         dispatch(setStatus(status))
+    }
+}
+
+export const savePhoto = (file: ) => async (dispatch: Dispatch) => {
+    let response = await profileAPI.savePhoto(file)
+
+    if (response.data.resultCode === 0) {
+        dispatch(savePhotoSuccess(response.data.data.photos))
     }
 }
 

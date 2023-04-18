@@ -6,6 +6,7 @@ import {AppStateType} from "../../redux/redux-store";
 import {getStatus, getUserProfile, Profiletype, updateStatus} from "../../redux/profile-reducer";
 import {compose, Dispatch} from "redux";
 import {RouteComponentProps} from "react-router";
+
 interface ProfileContainerType extends RouteComponentProps<{ userId: string | undefined }> {
     /*match: {
         params: {
@@ -23,20 +24,37 @@ interface ProfileContainerType extends RouteComponentProps<{ userId: string | un
 }
 
 class ProfileContainer extends React.Component<ProfileContainerType> {
-    componentDidMount() {
+
+    refreshProfile = () => {
         let userId = this.props.match.params.userId ? +this.props.match.params.userId : 27595
         if (!userId) {
             userId = this.props.authorizedUserId
             if (!userId) {
-               // this.props.history.push('/login')
+                this.props.history.push('/login')
             }
         }
         this.props.getUserProfile(userId)
         this.props.getStatus(userId)
     }
+
+    componentDidMount() {
+        this.refreshProfile()
+    }
+
+    componentDidUpdate(prevProps: Readonly<ProfileContainerType>, prevState: Readonly<{}>, snapshot?: any) {
+        if (this.props.match.params.userId != prevProps.match.params.userId) {
+            this.refreshProfile()
+        }
+    }
+
     render() {
         return (
-           <Profile {...this.props} profile={this.props.profile} status={this.props.status} updateStatus={this.props.updateStatus} />
+           <Profile {...this.props}
+                    isOwner={!this.props.match.params.userId}
+                    profile={this.props.profile} status={this.props.status}
+                    updateStatus={this.props.updateStatus}
+                    savePhoto={this.props.savePhoto}
+           />
         )
     }
 }
@@ -57,5 +75,5 @@ let mapStateToProps = (state: AppStateType): MSTP => ({
 
 export default compose<ComponentType>(
     withRouter,
-    connect(mapStateToProps, {getUserProfile, getStatus, updateStatus}),
+    connect(mapStateToProps, {getUserProfile, getStatus, updateStatus, savePhoto}),
 )(ProfileContainer)
