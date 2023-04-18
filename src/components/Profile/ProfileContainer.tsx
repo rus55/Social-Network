@@ -3,7 +3,14 @@ import Profile from './Profile'
 import {withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import {AppStateType} from "../../redux/redux-store";
-import {getStatus, getUserProfile, Profiletype, updateStatus} from "../../redux/profile-reducer";
+import {
+    getStatus,
+    getUserProfile,
+    Profiletype,
+    savePhoto,
+    saveProfile,
+    updateStatus
+} from "../../redux/profile-reducer";
 import {compose, Dispatch} from "redux";
 import {RouteComponentProps} from "react-router";
 
@@ -75,5 +82,5 @@ let mapStateToProps = (state: AppStateType): MSTP => ({
 
 export default compose<ComponentType>(
     withRouter,
-    connect(mapStateToProps, {getUserProfile, getStatus, updateStatus, savePhoto}),
+    connect(mapStateToProps, {getUserProfile, getStatus, updateStatus, savePhoto, saveProfile}),
 )(ProfileContainer)
