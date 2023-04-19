@@ -24,6 +24,10 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, err
             {createField('Email', 'email', [required], Input)}
             {createField('Password', 'password', [required], Input, {type:'password'} )}
             {createField(null, 'rememberMe', [required], Input, {type: 'checkbox'}, 'remember me' )}
+
+            {captchaUrl && <img src={captchaUrl} />}
+            {captchaUrl && createField('Symbols from image', 'captcha', [required], Input, {} )}
+
             {error && <div className={style.formSummaryError}>
                 {error}
             </div>}
@@ -39,7 +43,7 @@ const LoginReduxForm = reduxForm<FormDataType>({form: 'login'})(LoginForm)
 
 const Login = (props: LoginType) => {
     const onSubmit = (formData: FormDataType) => {
-        props.login(formData.email, formData.password, formData.rememberMe)
+        props.login(formData.email, formData.password, formData.rememberMe, formData.captcha)
     }
 
     if (props.isAuth) {
@@ -48,11 +52,12 @@ const Login = (props: LoginType) => {
 
     return <div>
         <h1>Login</h1>
-        <LoginReduxForm onSubmit={onSubmit}/>
+        <LoginReduxForm onSubmit={onSubmit} captchaUrl={props.captchaUrl}/>
     </div>
 };
 
 const mapStatetoProps = (state: AppStateType) => ({
+    captchaUrl: state.auth.captchaUrl
     isAuth: state.auth.isAuth
 })
 

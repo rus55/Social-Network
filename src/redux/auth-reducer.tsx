@@ -12,7 +12,7 @@ const initialState: InitialStateType = {
     email: null,
     login: null,
     isAuth: false,
-    captchaUrl: null
+    captchaUrl: null // if null, then captcha is not required
 }
 
 export type InitialStateType = {
@@ -26,13 +26,14 @@ export type InitialStateType = {
 const authReducer = (state: InitialStateType = initialState, action: AuthActionsType): InitialStateType => {
     switch (action.type) {
         case SET_USER_DATA:
+        case GET_CAPTCHA_URL_SUCCESS:
             return {
                 ...state,
-                //...action.payload
-                login: action.payload.login,
+                ...action.payload
+                /*login: action.payload.login,
                 email: action.payload.email,
                 id: action.payload.id,
-                isAuth: action.payload.isAuth,
+                isAuth: action.payload.isAuth,*/
             };
         default:
             return state
@@ -75,14 +76,18 @@ export const getAuthUserData = (): AppThunk => async (dispatch) => {
     }
 }
 
-export const login = (email: string, password: string, rememberMe: boolean): AppThunk => async (dispatch) => {
-    const response = await authAPI.login(email, password, rememberMe)
+export const login = (email: string, password: string, rememberMe: boolean, captcha: ): AppThunk => async (dispatch) => {
+    const response = await authAPI.login(email, password, rememberMe, captcha)
 
     if (response.data.resultCode === 0) {
         dispatch(getAuthUserData())
     } else {
-        let message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some error'
-        dispatch(stopSubmit('login', {_error: message}))
+        if (response.data.resultCode === 10) {
+
+        } else {
+            let message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some error'
+            dispatch(stopSubmit('login', {_error: message}))
+        }
     }
 }
 
