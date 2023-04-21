@@ -7,6 +7,9 @@ type ProfileType = {
     profile: ProfilePageType
     status: any
     updateStatus: (status: any) => void
+    savePhoto: any
+    isOwner: boolean
+    saveProfile: any
 }
 
 const Profile = (props: ProfileType) => {

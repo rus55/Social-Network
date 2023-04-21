@@ -1,18 +1,22 @@
-import React, {useState} from 'react'
+import React, {ChangeEvent, useState} from 'react'
 import s from './ProfileInfo.module.css'
 import Preloader from "../../common/Preloader/Preloader";
 import {ProfilePageType} from "../../../redux/store";
 import userPhoto from '../../../assests/images/user.png'
-import ProfileDataForm from "src/components/Profile/ProfileInfo/ProfileDataForm";
-import {saveProfile} from "src/redux/profile-reducer";
+import {Profiletype, saveProfile} from '../../../../src/redux/profile-reducer';
+import ProfileStatusWithHooks from '../../../../src/components/Profile/ProfileInfo/ProfileStatusWithHooks'
+import ProfileDataForm, {ProfileDataFormType} from '../../../../src/components/Profile/ProfileInfo/ProfileDataForm'
+import ProfileDataFormReduxForm from "../../../../src/components/Profile/ProfileInfo/ProfileDataForm";
 
 type ProfileInfoType = {
-    profile: ProfilePageType
-    status: any,
-    updateStatus: (status: any) => void
+    // profile: ProfilePageType
+    profile: Profiletype
+    status: string,
+    updateStatus: (status: string) => void
     isOwner: boolean
-    savePhoto: () => void
+    savePhoto: (photo: File) => void
     saveProfile: () => void
+
 }
 const ProfileInfo = (props: ProfileInfoType) => {
     let [editMode, setEditMode] = useState(false)
@@ -20,13 +24,13 @@ const ProfileInfo = (props: ProfileInfoType) => {
         return <Preloader/>
     }
 
-    const onMainPhotoSelected = (e) => {
-        if (e.target.files.length) {
+    const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files?.length) {
             props.savePhoto(e.target.files[0])
         }
     }
 
-    const onSubmit = (formData) => {
+    const onSubmit = (formData: ProfileDataFormType) => {
         saveProfile(formData).then(
             () => {
                 setEditMode(false)
@@ -38,15 +42,16 @@ const ProfileInfo = (props: ProfileInfoType) => {
         <div>
             <div>
                 <img src="https://wiotto.com/backend/webcontent/kcfinder/images/images/Maldives_Beach_1.jpg"
-                     alt=""/>
+                     alt="photo"/>
             </div>
             <div className={s.descriptionBlock}>
                 <img src={props.profile.photos.large || userPhoto} className={s.mainPhoto}/>
                 {props.isOwner && <input type={'file'} onChange={onMainPhotoSelected}/>}
 
                 {editMode
-                    ? <ProfileDataForm initialValue={profile} profile={profile} onSubmit={onSubmit}/>
-                    : <ProfileData goToEditMode={() => {setEditMode(true)} profile={profile} isOwner={isOwner} />}
+                    ? <ProfileDataFormReduxForm initialValue={props.profile} profile={props.profile} onSubmit={onSubmit}/>
+                    : <ProfileData goToEditMode={ () => {setEditMode(true)}} profile={props.profile} isOwner={props.isOwner}  />
+                }
 
                 <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
             </div>
@@ -55,7 +60,13 @@ const ProfileInfo = (props: ProfileInfoType) => {
     )
 }
 
-const ProfileData = ({profile, isOwner, goToEditMode}) => {
+type ProfileDataType = {
+    profile: Profiletype
+    isOwner: boolean
+    goToEditMode: () => void
+}
+
+const ProfileData = ({profile, isOwner, goToEditMode}: ProfileDataType) => {
     return <div>
         {isOwner && <div><button onClick={goToEditMode}>edit</button></div>}
         <div>
@@ -80,8 +91,12 @@ const ProfileData = ({profile, isOwner, goToEditMode}) => {
     </div>
 }
 
+type ContactType = {
+    contactTitle: string
+    contactValue: string
+}
 
-const Contact = ({contactTitle, contactValue}) => {
+const Contact = ({contactTitle, contactValue}: ContactType) => {
     return <div className={s.contact}><b>{contactTitle}</b>: {contactValue}</div>
 }
 
