@@ -85,19 +85,19 @@ const ProfileData = ({profile, isOwner, goToEditMode}: ProfileDataType) => {
         </div>
         <div>
             <b>Contacts</b>: {profile.contacts && Object.keys(profile.contacts).map((key) => {
-            return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]}/>
+            return <Contact key={key} contactTitle={key} contactValue={profile.contacts}/>
         })}
         </div>
     </div>
 }
-
+//.contacts[key as keyof contactsType]
 type ContactType = {
     contactTitle: string
-    contactValue: string
+    contactValue: contactsType | undefined
 }
 
 const Contact = ({contactTitle, contactValue}: ContactType) => {
-    return <div className={s.contact}><b>{contactTitle}</b>: {contactValue}</div>
+    return <div className={s.contact}><b>{contactTitle}</b>: {contactValue ? contactValue[contactTitle as keyof contactsType] : ''}</div>
 }
 
 export default ProfileInfo

@@ -1,7 +1,7 @@
 import s from './ProfileInfo.module.css'
 import {createField, Input, Textarea} from "../../common/FormsControls/FormsControls"
 import {reduxForm} from "redux-form";
-import style from "src/components/common/FormsControls/FormsControls.module.css";
+import style from "../../../../src/components/common/FormsControls/FormsControls.module.css";
 import React from "react";
 import {Profiletype} from "../../../../src/redux/profile-reducer";
 
