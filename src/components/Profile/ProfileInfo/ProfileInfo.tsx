@@ -38,13 +38,9 @@ const ProfileInfo = (props: ProfileInfoType) => {
 
     return (
         <div>
-            <div>
-                {/*<img src="https://wiotto.com/backend/webcontent/kcfinder/images/images/Maldives_Beach_1.jpg"
-                     alt="photo"/>*/}
-            </div>
             <div className={s.descriptionBlock}>
                 <img src={props?.profile?.photos?.large || userPhoto} className={s.mainPhoto}/>
-                {props.isOwner && <input type={'file'} onChange={onMainPhotoSelected}/>}
+                {props.isOwner && <input className={s.input} type={'file'} onChange={onMainPhotoSelected}/>}
 
                 {editMode
                     ? <ProfileDataFormReduxForm initialValue={props.profile} profile={props.profile} onSubmit={onSubmit}/>

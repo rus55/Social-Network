@@ -11,12 +11,11 @@ import {
     saveProfile,
     updateStatus
 } from "../../redux/profile-reducer";
-import {compose, Dispatch} from "redux";
+import {compose} from "redux";
 import {RouteComponentProps} from "react-router";
 import {ProfilePageType} from "../../../src/redux/store";
 
 class ProfileContainer extends React.Component<ProfileContainerProps> {
-
     refreshProfile = () => {
         let userId = this.props.match.params.userId ? +this.props.match.params.userId : 27595
         if (!userId) {

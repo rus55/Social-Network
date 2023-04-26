@@ -9,7 +9,6 @@ import { Textarea } from '../../common/FormsControls/FormsControls';
 const maxLength10 = maxLengthCreator(10)
 
 let AddNewPostForm: FC<InjectedFormProps<{newPostText: string}>> = React.memo((props) => {
-    console.log('Render')
     return (
         <form onSubmit={props.handleSubmit}>
             <div>

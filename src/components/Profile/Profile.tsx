@@ -13,7 +13,6 @@ type ProfileType = {
 }
 
 const Profile = (props: ProfileType) => {
-
     return (
         <div>
             <ProfileInfo

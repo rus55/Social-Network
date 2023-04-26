@@ -1,5 +1,12 @@
 .descriptionBlock {
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.input {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .mainPhoto {
