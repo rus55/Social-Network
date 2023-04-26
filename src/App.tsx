@@ -26,7 +26,7 @@ type AppPropsType = {
 }
 
 class App extends Component<AppPropsType> {
-    catchAllUnhandledErrors = (promiseRejectionEvent) => {
+    catchAllUnhandledErrors = (promiseRejectionEvent:any) => {
         alert(promiseRejectionEvent)
     }
     componentDidMount() {

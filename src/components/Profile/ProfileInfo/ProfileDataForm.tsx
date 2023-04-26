@@ -39,7 +39,7 @@ const ProfileDataForm = ({handleSubmit, profile, error}: ProfileDataFormType) =>
             {createField('About me', 'aboutMe', [], Textarea)}
        </div>
         <div>
-            <b>Contacts</b>: {Object.keys(profile.contacts).map(key => {
+            <b>Contacts</b>: {profile.contacts && Object.keys(profile.contacts).map(key => {
             return <div key={key} className={s.contact}>
                 <b>{key}:
                     {createField('', 'lookingForAJob', [], Input)}
@@ -50,6 +50,6 @@ const ProfileDataForm = ({handleSubmit, profile, error}: ProfileDataFormType) =>
     </form>
 }
 
-const ProfileDataFormReduxForm = reduxForm<ProfileFormDataType>({form: 'edit-profile'})(ProfileDataForm)
+const ProfileDataFormReduxForm = reduxForm<ProfileFormDataType,any>({form: 'edit-profile'})(ProfileDataForm)
 
 export default ProfileDataFormReduxForm

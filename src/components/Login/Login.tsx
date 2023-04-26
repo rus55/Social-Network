@@ -42,7 +42,7 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType> & {captchaUrl: string 
     )
 };
 
-const LoginReduxForm = reduxForm<FormDataType>({form: 'login'})(LoginForm)
+const LoginReduxForm = reduxForm<FormDataType,any>({form: 'login'})(LoginForm)
 
 const Login = (props: LoginType) => {
     const onSubmit = (formData: FormDataType) => {

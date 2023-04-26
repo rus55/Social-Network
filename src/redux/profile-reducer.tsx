@@ -26,12 +26,13 @@ export type PhotosType = {
     large: string
 }
 export type Profiletype = {
-    userId: number
-    lookingForAJob: boolean
-    lookingForAJobDescription: string
-    fullName: string
-    contacts: contactsType
-    photos: PhotosType
+    userId?: number
+    lookingForAJob?: boolean
+    lookingForAJobDescription?: string
+    fullName?: string
+    contacts?: contactsType
+    photos?: PhotosType,
+    aboutMe?:string
 }
 
 export type InitialStateType = {
@@ -118,7 +119,7 @@ export const savePhotoSuccess = (photos: PhotosType) => ({type: SAVE_PHOTO_SUCCE
 
 export const getUserProfile = (userId: number) => async (dispatch: Dispatch) => {
     let response = await usersAPI.getProfile(userId)
-    dispatch(setUserProfileActionCreator(response.data))
+    dispatch(setUserProfileActionCreator(response.data as Profiletype))
 }
 
 export const getStatus = (userId: number) => async (dispatch: Dispatch) => {
@@ -141,12 +142,14 @@ export const savePhoto = (file: File) => async (dispatch: Dispatch) => {
     }
 }
 
-export const saveProfile = (profile: ProfileDataFormType) => async (dispatch: AppDispatch, getState: AppStateType) => {
-    const userId = getState().auth.userId
+export const saveProfile = async (profile: ProfileDataFormType) => async (dispatch: AppDispatch, getState: ()=>AppStateType) => {
+    const userId = getState()?.auth?.id
     const response = await profileAPI.saveProfile(profile)
 
     if (response.data.resultCode === 0) {
+        if (userId) {
         dispatch(getUserProfile(userId))
+    }
     } else {
         dispatch(stopSubmit('edit-profile', {_error: response.data.messages[0]}))
         return Promise.reject(response.data.messages[0])

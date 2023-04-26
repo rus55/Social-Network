@@ -2,6 +2,7 @@ import axios from "axios";
 import {UserType} from "./../redux/users-reducer";
 import {ProfilePageType} from "../../src/redux/store";
 import {PhotosType} from "../../src/redux/profile-reducer";
+import {ProfileDataFormType} from "../components/Profile/ProfileInfo/ProfileDataForm";
 
 const instance = axios.create({
     withCredentials: true,
@@ -101,7 +102,7 @@ export const profileAPI = {
             }
         })
     },
-    saveProfile(profile: ProfilePageType) {
+    saveProfile(profile: ProfileDataFormType) {
         return instance.put<ResponseType>(`profile`, {profile: profile})
     }
 }
@@ -110,8 +111,8 @@ export const authAPI = {
     me() {
         return instance.get<AuthResponseType>(`auth/me`)
     },
-    login(email: string, password: string, rememberMe = false, captcha = null) {
-        return instance.post<AuthPostResponseType>('auth/login', [email, password, rememberMe, captcha])
+    login(email: string, password: string, rememberMe = false, captchaUrl:null|string = null) {
+        return instance.post<AuthPostResponseType>('auth/login', [email, password, rememberMe, captchaUrl])
     },
     logout() {
         return instance.delete<ResponseType<{userId?: number}>>('auth/login')
@@ -120,6 +121,6 @@ export const authAPI = {
 
 export const securityAPI = {
     getCaptchaUrl() {
-        return instance.get<AuthResponseType>(`security/get-captcha-url`)
+        return instance.get<any>(`security/get-captcha-url`)
     }
 }

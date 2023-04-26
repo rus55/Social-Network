@@ -3,14 +3,14 @@ import s from './ProfileInfo.module.css'
 import Preloader from "../../common/Preloader/Preloader";
 import {ProfilePageType} from "../../../redux/store";
 import userPhoto from '../../../assests/images/user.png'
-import {Profiletype, saveProfile} from '../../../../src/redux/profile-reducer';
+import {contactsType, Profiletype, saveProfile} from '../../../../src/redux/profile-reducer';
 import ProfileStatusWithHooks from '../../../../src/components/Profile/ProfileInfo/ProfileStatusWithHooks'
 import ProfileDataForm, {ProfileDataFormType} from '../../../../src/components/Profile/ProfileInfo/ProfileDataForm'
 import ProfileDataFormReduxForm from "../../../../src/components/Profile/ProfileInfo/ProfileDataForm";
 
 type ProfileInfoType = {
     // profile: ProfilePageType
-    profile: Profiletype
+    profile: Profiletype | null
     status: string,
     updateStatus: (status: string) => void
     isOwner: boolean
@@ -45,7 +45,7 @@ const ProfileInfo = (props: ProfileInfoType) => {
                      alt="photo"/>
             </div>
             <div className={s.descriptionBlock}>
-                <img src={props.profile.photos.large || userPhoto} className={s.mainPhoto}/>
+                <img src={props?.profile?.photos?.large || userPhoto} className={s.mainPhoto}/>
                 {props.isOwner && <input type={'file'} onChange={onMainPhotoSelected}/>}
 
                 {editMode
@@ -84,7 +84,7 @@ const ProfileData = ({profile, isOwner, goToEditMode}: ProfileDataType) => {
             <b>About me</b>: {profile.aboutMe}
         </div>
         <div>
-            <b>Contacts</b>: {Object.keys(profile.contacts).map(key => {
+            <b>Contacts</b>: {profile.contacts && Object.keys(profile.contacts).map((key) => {
             return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]}/>
         })}
         </div>

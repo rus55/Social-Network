@@ -21,10 +21,6 @@ export const rootReducer = combineReducers({
 export type AppActionsType = AuthActionsType | DialogsActions | ProfileActions| UsersActionsType | AppInitializedActionsType
 
 export type AppStateType = ReturnType<typeof rootReducer>
-
-/*const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware));*/
-
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
 export type AppDispatch = ThunkDispatch<AppStateType, unknown, AnyAction>

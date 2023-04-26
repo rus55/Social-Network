@@ -2,9 +2,10 @@ import React from 'react'
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import {ProfilePageType} from "../../redux/store";
+import {Profiletype} from "../../redux/profile-reducer";
 
 type ProfileType = {
-    profile: ProfilePageType
+    profile: Profiletype | null
     status: any
     updateStatus: (status: any) => void
     savePhoto: any
@@ -13,6 +14,7 @@ type ProfileType = {
 }
 
 const Profile = (props: ProfileType) => {
+
     return (
         <div>
             <ProfileInfo
