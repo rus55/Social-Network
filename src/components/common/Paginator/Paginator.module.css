@@ -7,10 +7,17 @@
     margin: 10px;
 }
 .pageNumber {
-    padding: 2px;
+    padding: 0px 10px 1px 10px;
     border: 1px solid darkgrey;
 }
 .pageNumber.selectedPage {
     font-weight: bolder;
     border-color: black;
+}
+
+.button {
+    padding: 5px 5px 0px 6px;
+    background-color: #7E9846;
+    color: white;
+
 }

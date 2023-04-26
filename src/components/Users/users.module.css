@@ -1,3 +1,18 @@
+.users {
+    display: flex;
+    flex-direction: column;
+}
+
+.user {
+    padding: 15px;
+    border: 1px dotted #9F494D;
+}
+
+.button {
+    padding-left: 25px;
+    color: #7E9846;
+}
+
 .userPhoto {
     width: 100px;
     height: 100px;
@@ -6,3 +21,4 @@
 .selectedPage {
     font-weight: bold;
 }
+

@@ -1,8 +1,6 @@
 import React from 'react';
 import s from './../Dialogs.module.css'
 
-
-
 const Message = (props: any) => {
     return <div className={s.dialog}>{props.message}</div>
 }

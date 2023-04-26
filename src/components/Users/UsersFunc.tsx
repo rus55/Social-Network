@@ -5,7 +5,6 @@ import axios from 'axios';
 import userPhoto from './../../assests/images/user.png'
 
 let Users = (props: UsersPropsType) => {
-    // тут сайдэффект, что не делает ее чистой
     let getUsers = () => {
         if (props.users.length === 0) {
             axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
@@ -17,11 +16,9 @@ let Users = (props: UsersPropsType) => {
     return <div>
         <button onClick={getUsers}>Get users</button>
         {
-            // props.users.map(u => <div key={u.id}>
             props.users.map(u => <div key={u.id}>
                 <span>
                     <div>
-                        {/*<img src={u.photoUrl} className={styles.userPhoto}/>*/}
                         <img src={u.photos.small !== null ? u.photos.small : userPhoto} className={styles.userPhoto}/>
                     </div>
                     <div>

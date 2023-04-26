@@ -16,7 +16,6 @@ type MSTP = {
     login: string | null
 }
 type MDTP = {
-    // getAuthUserData: () => void
     logout: () => void
 }
 const mapStateToProps = (state: AppStateType): MSTP => ({

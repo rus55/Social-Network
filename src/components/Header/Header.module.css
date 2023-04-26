@@ -1,12 +1,23 @@
 .header {
     grid-area: h;
-    background-color: green;
+    background-color: #9F494D;
 }
 .header img {
-    width: 20px;
+    width: 70px;
+    height: 63px;
+    border-radius: 4px;
+    margin: 7px 0px 0px 11px;
+}
+.logo {
+    color: white;
+    margin: 10px 0px 0px 20px;
+    font-size: 24px;
+    font-weight: bolder;
 }
 .loginBlock {
     float: right;
+    color: white;
+    margin: 22px 7px 0px 0px;
 }
 
 .loginBlock a {

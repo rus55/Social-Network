@@ -1,4 +1,4 @@
-import {UserResponseType, usersAPI} from "../api/api";
+import {usersAPI} from "../api/api";
 import {Dispatch} from "redux";
 import { updateObjectInArray } from "../utils/object-helpers";
 

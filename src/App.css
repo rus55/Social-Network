@@ -5,14 +5,14 @@
   grid-template-areas:
   'h h'
   'n c';
-  grid-template-rows: 60px 1fr;
+  grid-template-rows: 80px 1fr;
   grid-template-columns: 2fr 10fr;
-  /* grid-gap: 10px;*/
+  color: #2E6460;
 }
 
 .app-wrapper-content {
   grid-area: c;
-  background-color: darkgoldenrod;
+  background-color: #FAEFEF;
 }
 
 

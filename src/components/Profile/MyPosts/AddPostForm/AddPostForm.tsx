@@ -1,7 +1,6 @@
 import React, {FC} from 'react';
 import {Field, reduxForm, InjectedFormProps} from 'redux-form';
 
-
 const AddPostForm: FC<InjectedFormProps> = (props) => {
 
     return (
@@ -15,7 +14,6 @@ const AddPostForm: FC<InjectedFormProps> = (props) => {
         </form>
     )
 }
-
 export default reduxForm({
     form: 'profile-add-post'
 })(AddPostForm)

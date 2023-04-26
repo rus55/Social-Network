@@ -1,7 +1,5 @@
 import React from 'react'
 import profileReducer, {addPostActionCreator, deletePost} from "./profile-reducer";
-import ReactDOM from "react-dom";
-import App from '../App'
 
 let state = {
     newPostText: '',

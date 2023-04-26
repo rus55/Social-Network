@@ -1,4 +1,4 @@
-import {PostType, ProfilePageType} from './store';
+import {PostType} from './store';
 import {profileAPI, usersAPI} from "../api/api";
 import {Dispatch} from "redux";
 import {stopSubmit} from "redux-form";

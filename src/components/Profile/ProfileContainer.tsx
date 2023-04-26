@@ -15,22 +15,6 @@ import {compose, Dispatch} from "redux";
 import {RouteComponentProps} from "react-router";
 import {ProfilePageType} from "../../../src/redux/store";
 
-// interface ProfileContainerType extends RouteComponentProps<{ userId: string | undefined }> {
-//     /*match: {
-//         params: {
-//             userId: number
-//         }
-//     },
-//     history: any,*/
-//     profile: any,
-//     status: any,
-//     updateStatus: (status: any) => void
-//     getUserProfile: (userId: number) => (dispatch: Dispatch) => void,
-//     getStatus: (userId: number) => void
-//     isAuth: boolean
-//     authorizedUserId: number
-// }
-
 class ProfileContainer extends React.Component<ProfileContainerProps> {
 
     refreshProfile = () => {

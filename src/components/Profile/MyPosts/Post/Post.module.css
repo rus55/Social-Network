@@ -1,5 +1,7 @@
 .item {
-    color: bisque;
+    color: #2E6460;
+    padding: 20px 20px 20px 20px;
+    border: 1px dotted #9F494D;
 }
 
 .item img {

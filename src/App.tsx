@@ -47,14 +47,12 @@ class App extends Component<AppPropsType> {
                 <HeaderContainer/>
                 <Navbar/>
                 <div className="app-wrapper-content">
-                    <Route path="/" render={() => <Redirect to={'/profile'} />} />
-                    <Route path="/dialogs" render={withSuspense(DialogsContainer)} />
+                    {/*<Route path="/" render={() => <Redirect to={'/profile'} />} />*/}
                     <Route path="/profile/:userId?" render={withSuspense(ProfileContainer)} />
-                    <Route path="/users"
-                           render={() => <UsersContainer/>}/>
-                    <Route path="/login"
-                           render={() => <LoginPage/>}/>
-                    <Route path='*' render={() => <div>404 NOT FOUND</div> }  />
+                    <Route path="/dialogs" render={withSuspense(DialogsContainer)} />
+                    <Route path="/users" render={() => <UsersContainer/>}/>
+                    <Route path="/login" render={() => <LoginPage/>}/>
+                    {/*<Route path='*' render={() => <div>404 NOT FOUND</div> }  />*/}
                     {/*<Route path='/news' render={() => <News />}/>*/}
                     {/*<Route path='/music' render={() => <Music />}/>*/}
                     {/*<Route path='/settings' render={() => <Settings />}/>*/}

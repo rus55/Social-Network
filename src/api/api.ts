@@ -1,6 +1,5 @@
 import axios from "axios";
 import {UserType} from "./../redux/users-reducer";
-import {ProfilePageType} from "../../src/redux/store";
 import {PhotosType} from "../../src/redux/profile-reducer";
 import {ProfileDataFormType} from "../components/Profile/ProfileInfo/ProfileDataForm";
 

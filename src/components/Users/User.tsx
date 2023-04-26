@@ -13,7 +13,7 @@ type UsersType = {
 
 const User: React.FC<UsersType> = ({user, followingInProgress, unfollow, follow }) => {
     return (
-        <div>
+        <div className={styles.user}>
                     <span>
                         <div>
                             <NavLink to={''}>
@@ -21,12 +21,12 @@ const User: React.FC<UsersType> = ({user, followingInProgress, unfollow, follow 
                                  className={styles.userPhoto}/>
                                 </NavLink>
                         </div>
-                        <div>
+                        <div className={styles.button}>
                             {user.followed
                                 ? <button disabled={followingInProgress.some(id => id === user.id)} onClick={() => {
                                     unfollow(user.id)
                                 }}>Unfollow</button>
-                                : <button disabled={followingInProgress.some(id => id === user.id)} onClick={() => {
+                                : <button  disabled={followingInProgress.some(id => id === user.id)} onClick={() => {
                                     follow(user.id)
                                 }}>Follow</button>
                             }

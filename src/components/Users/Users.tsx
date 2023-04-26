@@ -2,6 +2,7 @@ import React from 'react';
 import {UserType} from "../../redux/users-reducer";
 import {Paginator} from '../common/Paginator/Paginator';
 import User from './User';
+import s from './users.module.css'
 
 export type UserDataType = {
     currentPage: number
@@ -19,11 +20,13 @@ const Users: React.FC<UserDataType> = ({currentPage, onPageChanged, totalUsersCo
                    onPageChanged={onPageChanged}
                    totalUsersCount={totalUsersCount}
                    pageSize={pageSize}/>
-        {
-            props.users.map(u => <User user={u} followingInProgress={props.followingInProgress}
-                                       unfollow={props.unfollow} follow={props.follow} key={u.id}
-            />)
-        }
+        <div className={s.users}>
+            {
+                props.users.map(u => <User user={u} followingInProgress={props.followingInProgress}
+                                           unfollow={props.unfollow} follow={props.follow} key={u.id}
+                />)
+            }
+        </div>
     </div>
 }
 

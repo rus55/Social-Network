@@ -1,15 +1,13 @@
 import React, {ChangeEvent, useState} from 'react'
 import s from './ProfileInfo.module.css'
 import Preloader from "../../common/Preloader/Preloader";
-import {ProfilePageType} from "../../../redux/store";
 import userPhoto from '../../../assests/images/user.png'
 import {contactsType, Profiletype, saveProfile} from '../../../../src/redux/profile-reducer';
 import ProfileStatusWithHooks from '../../../../src/components/Profile/ProfileInfo/ProfileStatusWithHooks'
-import ProfileDataForm, {ProfileDataFormType} from '../../../../src/components/Profile/ProfileInfo/ProfileDataForm'
+import {ProfileDataFormType} from '../../../../src/components/Profile/ProfileInfo/ProfileDataForm'
 import ProfileDataFormReduxForm from "../../../../src/components/Profile/ProfileInfo/ProfileDataForm";
 
 type ProfileInfoType = {
-    // profile: ProfilePageType
     profile: Profiletype | null
     status: string,
     updateStatus: (status: string) => void
@@ -41,8 +39,8 @@ const ProfileInfo = (props: ProfileInfoType) => {
     return (
         <div>
             <div>
-                <img src="https://wiotto.com/backend/webcontent/kcfinder/images/images/Maldives_Beach_1.jpg"
-                     alt="photo"/>
+                {/*<img src="https://wiotto.com/backend/webcontent/kcfinder/images/images/Maldives_Beach_1.jpg"
+                     alt="photo"/>*/}
             </div>
             <div className={s.descriptionBlock}>
                 <img src={props?.profile?.photos?.large || userPhoto} className={s.mainPhoto}/>
@@ -90,7 +88,7 @@ const ProfileData = ({profile, isOwner, goToEditMode}: ProfileDataType) => {
         </div>
     </div>
 }
-//.contacts[key as keyof contactsType]
+
 type ContactType = {
     contactTitle: string
     contactValue: contactsType | undefined

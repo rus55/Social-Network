@@ -3,10 +3,6 @@ import {connect} from "react-redux";
 import {Redirect} from "react-router-dom";
 import {ComponentType} from "react";
 
-/*let mapStateToPropsForRedirect = (state: AppStateType) => ({
-    isAuth: state.auth.isAuth
-})*/
-
 type mapStateToPropsType = {
     isAuth: boolean
 }
